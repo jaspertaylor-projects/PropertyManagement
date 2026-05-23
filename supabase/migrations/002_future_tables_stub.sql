@@ -1,0 +1,142 @@
+-- ============================================================================
+-- Future Tables — Stubbed for future implementation
+-- These tables are commented out and serve as documentation for planned features.
+-- ============================================================================
+
+-- ============================================================================
+-- Applications System
+-- ============================================================================
+
+-- CREATE TABLE IF NOT EXISTS applications (
+--   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--   listing_id uuid REFERENCES listings(id) ON DELETE SET NULL,
+--   applicant_user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
+--   first_name text NOT NULL,
+--   last_name text NOT NULL,
+--   email text NOT NULL,
+--   phone text,
+--   date_of_birth date,
+--   ssn_encrypted text,
+--   current_address text,
+--   employer text,
+--   employer_phone text,
+--   annual_income numeric,
+--   move_in_date date,
+--   lease_term_requested text,
+--   co_applicants jsonb DEFAULT '[]',
+--   rental_history jsonb DEFAULT '[]',
+--   references jsonb DEFAULT '[]',
+--   status text NOT NULL DEFAULT 'submitted' CHECK (status IN ('submitted', 'under_review', 'approved', 'denied', 'withdrawn')),
+--   application_fee_paid boolean DEFAULT false,
+--   background_check_status text,
+--   notes text,
+--   created_at timestamptz DEFAULT now(),
+--   updated_at timestamptz DEFAULT now()
+-- );
+
+-- CREATE TABLE IF NOT EXISTS application_documents (
+--   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--   application_id uuid REFERENCES applications(id) ON DELETE CASCADE,
+--   document_type text NOT NULL CHECK (document_type IN ('id', 'pay_stub', 'tax_return', 'bank_statement', 'reference_letter', 'other')),
+--   file_url text NOT NULL,
+--   file_name text,
+--   uploaded_at timestamptz DEFAULT now()
+-- );
+
+-- ============================================================================
+-- Payments System
+-- ============================================================================
+
+-- CREATE TABLE IF NOT EXISTS payments (
+--   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--   tenant_user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
+--   listing_id uuid REFERENCES listings(id) ON DELETE SET NULL,
+--   lease_id uuid REFERENCES leases(id) ON DELETE SET NULL,
+--   amount numeric NOT NULL,
+--   payment_type text NOT NULL CHECK (payment_type IN ('rent', 'deposit', 'application_fee', 'late_fee', 'maintenance', 'other')),
+--   payment_method text CHECK (payment_method IN ('ach', 'card', 'check', 'cash', 'other')),
+--   status text NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'failed', 'refunded')),
+--   stripe_payment_id text,
+--   convenience_fee numeric DEFAULT 0,
+--   due_date date,
+--   paid_date timestamptz,
+--   notes text,
+--   created_at timestamptz DEFAULT now()
+-- );
+
+-- ============================================================================
+-- Leases System
+-- ============================================================================
+
+-- CREATE TABLE IF NOT EXISTS leases (
+--   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--   listing_id uuid REFERENCES listings(id) ON DELETE SET NULL,
+--   tenant_user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
+--   start_date date NOT NULL,
+--   end_date date NOT NULL,
+--   monthly_rent numeric NOT NULL,
+--   security_deposit numeric,
+--   lease_document_url text,
+--   signed_at timestamptz,
+--   status text NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'pending_signature', 'active', 'expired', 'terminated')),
+--   terms jsonb,
+--   created_at timestamptz DEFAULT now(),
+--   updated_at timestamptz DEFAULT now()
+-- );
+
+-- ============================================================================
+-- Maintenance Requests
+-- ============================================================================
+
+-- CREATE TABLE IF NOT EXISTS maintenance_requests (
+--   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--   listing_id uuid REFERENCES listings(id) ON DELETE SET NULL,
+--   tenant_user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
+--   title text NOT NULL,
+--   description text NOT NULL,
+--   priority text NOT NULL DEFAULT 'normal' CHECK (priority IN ('low', 'normal', 'high', 'emergency')),
+--   status text NOT NULL DEFAULT 'submitted' CHECK (status IN ('submitted', 'in_progress', 'completed', 'cancelled')),
+--   photos text[],
+--   assigned_to text,
+--   resolved_at timestamptz,
+--   notes text,
+--   created_at timestamptz DEFAULT now(),
+--   updated_at timestamptz DEFAULT now()
+-- );
+
+-- ============================================================================
+-- Multi-Property Owner System
+-- ============================================================================
+
+-- CREATE TABLE IF NOT EXISTS owners (
+--   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--   user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE,
+--   company_name text,
+--   first_name text NOT NULL,
+--   last_name text NOT NULL,
+--   email text NOT NULL,
+--   phone text,
+--   created_at timestamptz DEFAULT now()
+-- );
+
+-- CREATE TABLE IF NOT EXISTS properties (
+--   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--   owner_id uuid REFERENCES owners(id) ON DELETE CASCADE,
+--   name text NOT NULL,
+--   address text NOT NULL,
+--   city text NOT NULL,
+--   state text NOT NULL,
+--   zip text NOT NULL,
+--   property_type text CHECK (property_type IN ('single_family', 'multi_family', 'apartment', 'condo', 'townhouse', 'commercial')),
+--   total_units integer DEFAULT 1,
+--   created_at timestamptz DEFAULT now()
+-- );
+
+-- CREATE TABLE IF NOT EXISTS units (
+--   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+--   property_id uuid REFERENCES properties(id) ON DELETE CASCADE,
+--   listing_id uuid REFERENCES listings(id) ON DELETE SET NULL,
+--   unit_number text,
+--   floor integer,
+--   created_at timestamptz DEFAULT now()
+-- );
