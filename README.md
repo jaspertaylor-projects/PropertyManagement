@@ -1,6 +1,47 @@
-# Harbor Rental Group Website
+# H2O Watermark Property Management Website
 
 A modern property management website built with Next.js (App Router), Tailwind CSS v4, shadcn/ui, and Supabase.
+
+The live site uses **H2O Watermark** branding. The package name and some default content still use **Harbor Rental Group**.
+
+## Project URLs
+
+The website is deployed on **Vercel**. On September 8, 2026, the public homepage returned HTTP 200 and displayed H2O Watermark branding and rental listings matching this repository.
+
+| Environment | Website | Manager/admin login | Manager dashboard |
+| --- | --- | --- | --- |
+| Live (Vercel) | [Website](https://property-management-tawny-alpha.vercel.app) | [Login](https://property-management-tawny-alpha.vercel.app/login) | [Dashboard](https://property-management-tawny-alpha.vercel.app/manager) |
+| Local development | [Website](http://localhost:3000) | [Login](http://localhost:3000/login) | [Dashboard](http://localhost:3000/manager) |
+
+The local URLs require `npm run dev`; use the port printed by Next.js if port 3000 is occupied. The local `NEXT_PUBLIC_SITE_URL=http://localhost:3000` setting describes the development environment and does not indicate whether a Vercel deployment exists. Production environment variables are managed separately in Vercel.
+
+## Manager/admin access
+
+The website signs managers in through **Supabase Auth with email and password**. The dashboard is at `/manager` and requires authentication.
+
+- **Login email:** Not yet confirmed. The locally configured manager notification/contact email is `aloha.ckim@h2owatermark.com`; this setting does not establish that a Supabase login account exists for that address.
+- **Password:** No website login password was found in the project. The local `pws.txt` file is labeled as a Supabase **database** password, not a website login password. It is ignored by Git.
+- **Account lookup:** On September 8, 2026, a read-only account lookup against the locally configured Supabase project returned `Database error finding users`, so the actual login account could not be verified.
+- **Account management:** Confirm the account in the deployment's Supabase project under **Authentication → Users**. The `admin@harborrentalgroup.com` address in the setup guide below is only an example, not a verified account. There is no seeded admin login.
+
+Keep passwords and API secrets out of repository documentation. See [human-to-do.md](human-to-do.md) for the remaining account verification steps.
+
+## Tech stack
+
+Versions below reflect the declarations in [package.json](package.json); [package-lock.json](package-lock.json) records resolved dependency versions.
+
+| Area | Technology |
+| --- | --- |
+| Application framework | Next.js 16.2.6, App Router, server actions |
+| UI and language | React 19.2.4, TypeScript 5 |
+| Styling and components | Tailwind CSS 4, shadcn/ui, Base UI |
+| Database, authentication, and image storage | Supabase: PostgreSQL, Auth, Storage; Supabase JS 2 and SSR helpers |
+| Validation | Zod 4 |
+| Icons, notifications, and dates | Lucide React, Sonner, date-fns 4 |
+| Tooling | npm, ESLint 9 |
+| Website hosting | Vercel |
+
+Email notifications currently use an integration stub. Resend is a planned provider, not an implemented email service.
 
 ## Features
 - **Public Listings**: Browse available rentals with advanced filtering.
@@ -27,12 +68,12 @@ Once your project is ready:
 1. **Run Migrations**: 
    - Go to the **SQL Editor** (the `<>` icon on the left sidebar).
    - Click **New Query**.
-   - Copy the entire contents of `supabase/migrations/01_schema.sql` from this codebase and paste it into the editor.
+   - Copy the entire contents of `supabase/migrations/001_initial_schema.sql` from this codebase and paste it into the editor.
    - Click **Run** in the bottom right corner. This creates all tables and security policies.
 2. **Add Demo Data**:
    - Open a new query in the SQL Editor.
    - Copy the contents of `supabase/seed.sql` and paste it into the editor.
-   - Click **Run**. This populates the database with demo listings and a demo user.
+   - Click **Run**. This populates the database with demo listings, images, and inquiries. It does not create a login account.
 3. **Create the Storage Bucket**:
    - Go to **Storage** (the folder icon on the left sidebar).
    - Click **New Bucket**.
@@ -78,7 +119,7 @@ Once your project is ready:
 
 ## 🌍 Deployment Guide: Running Online (Production)
 
-To deploy your site so it is accessible on the internet, we recommend using **Vercel** for hosting the Next.js app and your existing **Supabase** project for the backend.
+The existing live website is hosted on **Vercel** at <https://property-management-tawny-alpha.vercel.app>, with **Supabase** providing the backend. The steps below describe setting up another deployment; they are not required to access the existing website.
 
 ### Step 1: Prepare Supabase for Production
 You can either use the same Supabase project you created for local development, or create a brand new one specifically for Production. If you create a new one, repeat **Step 1 and Step 2** from the local setup guide on your new project.
