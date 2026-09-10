@@ -40,7 +40,9 @@ Manager access uses Supabase email/password authentication. See the shared demo 
 | Password | `opportunity` |
 | Dashboard | [Open the management dashboard](https://property-management-tawny-alpha.vercel.app/manager) |
 
-**Setup pending:** These are the requested shared demo credentials. Account creation and live sign-in have not yet been confirmed because Supabase requests are timing out. See [account access notes](human-to-do.md#access-notes) for the current status.
+To try the management portal, open the login page, enter the email and password above, and select **Sign In**. The account opens the manager dashboard, where you can explore listings and the inquiry inbox.
+
+Live sign-in and access to the dashboard, listings, and inquiries pages were verified on September 10, 2026. See [account access notes](human-to-do.md#access-notes) for setup details.
 
 This shared account is intended for exploring the property management mockup with sample data. Its credentials are published intentionally for demonstrations; private client accounts and backend API secrets are managed separately.
 

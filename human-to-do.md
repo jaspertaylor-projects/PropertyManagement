@@ -11,19 +11,19 @@ This project is a website mockup used to pitch custom websites to property manag
 
 ## Confirm manager/admin access
 
-1. Open the existing project in your Vercel dashboard and identify the Supabase project from its production `NEXT_PUBLIC_SUPABASE_URL` environment variable. The local configuration may point to a different project.
-2. Check that Supabase Authentication and the database respond. The latest setup attempt encountered timeouts even though the project status was `ACTIVE_HEALTHY`.
-3. In **Authentication → Users**, look for `anonymous@aloha.com` before creating another account: a timed-out creation request does not establish whether a user was saved. If it is absent, create this demo user with password `opportunity` and mark its email as confirmed. If it exists, ensure it has the requested password and is confirmed.
-4. If maintaining a corresponding `public.profiles` record, use the Auth user's ID, email `anonymous@aloha.com`, and role `manager`.
-5. Sign in at <https://property-management-tawny-alpha.vercel.app/login> with `anonymous@aloha.com` / `opportunity`. Confirm that `/manager`, `/manager/listings`, and `/manager/inquiries` open.
-6. After successful verification, replace the README's **Setup pending** note with login instructions and update the verification date below. This shared demo password is intentionally published at the project owner's request; keep private account passwords and backend API secrets out of the repository.
+1. Sign in at <https://property-management-tawny-alpha.vercel.app/login> with `anonymous@aloha.com` / `opportunity`. The shared demo account is already configured on the hosted site.
+2. Confirm that `/manager`, `/manager/listings`, and `/manager/inquiries` open before a client presentation.
+3. For a separate deployment, identify its Supabase project from Vercel's `NEXT_PUBLIC_SUPABASE_URL` environment variable. Accounts belong to a specific Supabase project and are not created by the SQL seed.
+4. In that project's **Authentication → Users**, create the demo user if absent and mark its email as confirmed. Add a matching `public.profiles` record with the Auth user's ID, email `anonymous@aloha.com`, and role `manager`.
+5. Test the new deployment's login and update its URL and verification notes. This shared demo password is intentionally published at the project owner's request; keep private account passwords and backend API secrets out of the repository.
 
 ### Access notes
 
-- **Requested shared login:** `anonymous@aloha.com` / `opportunity`.
-- **Account status:** Creation and sign-in are unconfirmed. On September 10, 2026, Supabase account lookup and creation requests timed out. An isolated Playwright check of the hosted login remained on **Signing in...** instead of reaching the dashboard.
-- **Backend status:** The locally configured Supabase project is `PropertyManager` (`sregubugfuogzkleftib`). The CLI reported `ACTIVE_HEALTHY`, but authenticated API requests timed out and a database lookup through the IPv4 pooler returned HTTP 544 with `Connection terminated due to connection timeout`.
-- **Earlier issue:** The September 8, 2026 account lookup returned `Database error finding users`.
+- **Shared demo login:** `anonymous@aloha.com` / `opportunity`.
+- **Account status:** Created with a confirmed email and a matching `public.profiles` record with role `manager`. Supabase password authentication and the profile lookup both succeeded.
+- **Live verification:** On September 10, 2026, an isolated Playwright browser signed in through the hosted login page and opened the dashboard, listings, and inquiries pages successfully. Listing edits and inquiry submissions were not part of this access check.
+- **Backend:** `PropertyManager` (`sregubugfuogzkleftib`). The created account was verified against both this Supabase project and the hosted website.
+- **Resolved connection issue:** Initial setup requests timed out during Supabase's September 10 [Unresponsive Projects incident](https://status.supabase.com/incidents/4mkcsnlf6p5x). After the project owner restarted the project, account creation and live login succeeded.
 - **Other credentials:** `aloha.ckim@h2owatermark.com` is the locally configured notification address, not a verified login account. The local, Git-ignored `pws.txt` file contains a separate database credential.
 - **Fresh installations:** The SQL seed does not create this shared demo account or any other login account.
 
