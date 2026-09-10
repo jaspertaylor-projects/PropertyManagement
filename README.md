@@ -4,7 +4,7 @@ An interactive website mockup built to help sell custom website design and devel
 
 This project gives prospective clients a concrete example of what a new website could look like and how it could support their rental business. It combines a public rental website with a manager dashboard, providing a starting point for sales presentations, design feedback, and discussions about a client's requirements.
 
-**[View the live demo](https://property-management-tawny-alpha.vercel.app)**
+**Live site:** [https://property-management-tawny-alpha.vercel.app](https://property-management-tawny-alpha.vercel.app)
 
 The current demo uses **H2O Watermark** branding and sample rental listings. It is a prototype for evaluating a proposed website, with working core features and placeholders for future services. A client launch would require its own content, configuration, integrations, and acceptance testing.
 
@@ -29,7 +29,20 @@ The demo is intended for property managers, rental agencies, and real estate ope
 
 The hosted demo runs on Vercel. Its homepage was verified on September 8, 2026. Local URLs require the development server to be running; use the port printed by Next.js if port 3000 is occupied.
 
-Manager access uses Supabase email/password authentication. There is no default or seeded admin account. See [demo preparation and account access](human-to-do.md) for credential verification and setup notes.
+Manager access uses Supabase email/password authentication. See the shared demo account below and [demo preparation and account access](human-to-do.md) for setup notes.
+
+## Management portal demo login
+
+| Detail | Value |
+| --- | --- |
+| Login page | [Open the management portal login](https://property-management-tawny-alpha.vercel.app/login) |
+| Email | `anonymous@aloha.com` |
+| Password | `opportunity` |
+| Dashboard | [Open the management dashboard](https://property-management-tawny-alpha.vercel.app/manager) |
+
+**Setup pending:** These are the requested shared demo credentials. Account creation and live sign-in have not yet been confirmed because Supabase requests are timing out. See [account access notes](human-to-do.md#access-notes) for the current status.
+
+This shared account is intended for exploring the property management mockup with sample data. Its credentials are published intentionally for demonstrations; private client accounts and backend API secrets are managed separately.
 
 ## Demonstration scope
 
@@ -103,7 +116,7 @@ NEXT_PUBLIC_COMPANY_EMAIL=your_demo_contact_email
 PROPERTY_MANAGER_EMAIL=your_manager_notification_email
 ```
 
-Keep secret keys and passwords in your local environment or hosting configuration. The manager notification address does not create a login account, and setting it does not enable email delivery.
+Keep backend secret keys and private account passwords in your local environment or hosting configuration. The shared demo login above is intentionally public. The manager notification address does not create a login account, and setting it does not enable email delivery.
 
 ### 4. Start the application
 

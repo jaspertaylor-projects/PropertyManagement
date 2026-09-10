@@ -12,17 +12,20 @@ This project is a website mockup used to pitch custom websites to property manag
 ## Confirm manager/admin access
 
 1. Open the existing project in your Vercel dashboard and identify the Supabase project from its production `NEXT_PUBLIC_SUPABASE_URL` environment variable. The local configuration may point to a different project.
-2. Open that Supabase project and go to **Authentication → Users**. Find the intended manager account and confirm its email. The locally configured contact address, `aloha.ckim@h2owatermark.com`, has not been verified as a login account.
-3. Retrieve the website account password from your password manager, or reset it through Supabase account administration if needed. The database password is a separate credential. If no manager account exists, create the intended manager user through Supabase Authentication.
-4. Sign in at <https://property-management-tawny-alpha.vercel.app/login> and confirm that the `/manager` dashboard opens. If the account lookup still reports `Database error finding users`, resolve that Supabase error before treating the account as verified.
-5. Update the access notes below with the confirmed login email and verification date. Store the password in your password manager; do not add it or API secrets to the repository.
+2. Check that Supabase Authentication and the database respond. The latest setup attempt encountered timeouts even though the project status was `ACTIVE_HEALTHY`.
+3. In **Authentication → Users**, look for `anonymous@aloha.com` before creating another account: a timed-out creation request does not establish whether a user was saved. If it is absent, create this demo user with password `opportunity` and mark its email as confirmed. If it exists, ensure it has the requested password and is confirmed.
+4. If maintaining a corresponding `public.profiles` record, use the Auth user's ID, email `anonymous@aloha.com`, and role `manager`.
+5. Sign in at <https://property-management-tawny-alpha.vercel.app/login> with `anonymous@aloha.com` / `opportunity`. Confirm that `/manager`, `/manager/listings`, and `/manager/inquiries` open.
+6. After successful verification, replace the README's **Setup pending** note with login instructions and update the verification date below. This shared demo password is intentionally published at the project owner's request; keep private account passwords and backend API secrets out of the repository.
 
 ### Access notes
 
-- **Login email:** Unconfirmed. `aloha.ckim@h2owatermark.com` is the locally configured manager notification address, not a verified login account.
-- **Website password:** Not found in the project. The local, Git-ignored `pws.txt` file is labeled as a Supabase database password, not a website login password.
-- **Last account lookup:** On September 8, 2026, a read-only lookup against the locally configured Supabase project returned `Database error finding users`. The deployed manager workflow has not been verified.
-- **Default accounts:** The SQL seed does not create an admin or manager account.
+- **Requested shared login:** `anonymous@aloha.com` / `opportunity`.
+- **Account status:** Creation and sign-in are unconfirmed. On September 10, 2026, Supabase account lookup and creation requests timed out. An isolated Playwright check of the hosted login remained on **Signing in...** instead of reaching the dashboard.
+- **Backend status:** The locally configured Supabase project is `PropertyManager` (`sregubugfuogzkleftib`). The CLI reported `ACTIVE_HEALTHY`, but authenticated API requests timed out and a database lookup through the IPv4 pooler returned HTTP 544 with `Connection terminated due to connection timeout`.
+- **Earlier issue:** The September 8, 2026 account lookup returned `Database error finding users`.
+- **Other credentials:** `aloha.ckim@h2owatermark.com` is the locally configured notification address, not a verified login account. The local, Git-ignored `pws.txt` file contains a separate database credential.
+- **Fresh installations:** The SQL seed does not create this shared demo account or any other login account.
 
 ## Scope a client implementation
 
